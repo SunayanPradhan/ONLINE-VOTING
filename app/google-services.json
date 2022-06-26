@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "989067417892",
+    "firebase_url": "https://online-voting-c7af9-default-rtdb.firebaseio.com",
+    "project_id": "online-voting-c7af9",
+    "storage_bucket": "online-voting-c7af9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989067417892:android:aa82e00ae8e2975c4d7bb1",
+        "android_client_info": {
+          "package_name": "com.sunayanpradhan.onlinevoting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989067417892-fv1e0k3ndfheg8j5clnd3185l781lk2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtOycGEeKZgnOXTa5btpr0FFN-92BWzWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989067417892-fv1e0k3ndfheg8j5clnd3185l781lk2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
