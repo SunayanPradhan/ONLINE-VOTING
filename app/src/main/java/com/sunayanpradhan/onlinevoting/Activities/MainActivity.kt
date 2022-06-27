@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity() {
                 else {
                     verifyPhoneNumberWithCode(storedVerificationId, otpNo.text.toString())
 
-                    Toast.makeText(this@MainActivity, "123456", Toast.LENGTH_SHORT).show()
 
                 }
             }
@@ -264,7 +263,7 @@ class MainActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance().reference.child("Voters").child(firebaseUser.uid)
                 .setValue(user).addOnSuccessListener {
 
-                    val intent=Intent(this,VoteActivity::class.java)
+                    val intent=Intent(this,VoteCategoryActivity::class.java)
 
                     startActivity(intent)
 
@@ -282,7 +281,7 @@ class MainActivity : AppCompatActivity() {
 
         if (auth.currentUser!=null){
 
-            val intent=Intent(this,VoteActivity::class.java)
+            val intent=Intent(this,VoteCategoryActivity::class.java)
 
             startActivity(intent)
 

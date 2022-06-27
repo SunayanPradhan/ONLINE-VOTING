@@ -17,11 +17,14 @@
         android:theme="@style/Theme.ONLINEVOTING"
         tools:targetApi="31">
         <activity
-            android:name=".VoteCategoryActivity"
+            android:name=".Activities.VoteListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VoteCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.VoteActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true">

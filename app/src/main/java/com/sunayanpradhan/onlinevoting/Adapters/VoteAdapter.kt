@@ -1,17 +1,27 @@
 package com.sunayanpradhan.onlinevoting.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.sunayanpradhan.onlinevoting.Activities.VoteActivity.Companion.voteId
+import com.sunayanpradhan.onlinevoting.Activities.VoteActivity.Companion.voteSubmit
+import com.sunayanpradhan.onlinevoting.Activities.VoteListActivity
 import com.sunayanpradhan.onlinevoting.R
 import com.sunayanpradhan.onlinevoting.Models.TeamInformation
+import com.sunayanpradhan.onlinevoting.Models.VoteResponseInformation
+import java.util.*
+import kotlin.collections.ArrayList
 
 class VoteAdapter(var list: ArrayList<TeamInformation>, var context: Context) : RecyclerView.Adapter<VoteAdapter.ViewHolder>(){
 
@@ -72,6 +82,9 @@ class VoteAdapter(var list: ArrayList<TeamInformation>, var context: Context) : 
     private fun setSingleSelection(adapterPosition:Int){
 
         if (adapterPosition==RecyclerView.NO_POSITION){
+
+            voteSubmit.visibility=View.GONE
+
             return
         }
 
@@ -81,6 +94,60 @@ class VoteAdapter(var list: ArrayList<TeamInformation>, var context: Context) : 
             singleitem_selection_position=adapterPosition
 
             notifyItemChanged(singleitem_selection_position)
+
+            voteSubmit.visibility=View.VISIBLE
+
+            voteSubmit.setOnClickListener {
+
+                var vrInformation=VoteResponseInformation()
+
+                vrInformation.voterId=FirebaseAuth.getInstance().uid.toString()
+                vrInformation.voteTeam=list[adapterPosition].teamId
+                vrInformation.voteTime=Date().time
+
+                FirebaseDatabase.getInstance().reference.child("VoteResponse")
+                    .child(voteId)
+                    .child("TeamsVoteCount")
+                    .child(vrInformation.voteTeam).child(FirebaseAuth.getInstance().uid.toString()).setValue(vrInformation)
+                    .addOnSuccessListener {
+
+                        val dialogView = View.inflate(context, R.layout.submit_dialog_layout, null)
+
+                        val builder = android.app.AlertDialog.Builder(context).setView(dialogView).create()
+
+
+                        builder.show()
+
+                        builder.setCancelable(false)
+
+                        builder.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                        var dialogOk=dialogView.findViewById(R.id.dialog_ok) as Button
+                        var dialogTxt=dialogView.findViewById(R.id.dialog_txt) as TextView
+
+                        dialogTxt.text="YOUR VOTE IS DONE"
+
+                        dialogOk.setOnClickListener {
+
+                            val intent=Intent(context,VoteListActivity::class.java)
+
+                            context.startActivity(intent)
+
+                            builder.dismiss()
+
+                        }
+
+
+                    }
+
+                FirebaseDatabase.getInstance().reference.child("VoteResponse")
+                    .child(voteId)
+                    .child("TotalVoteCount")
+                    .child(FirebaseAuth.getInstance().uid.toString()).setValue(true)
+
+
+            }
+
 
         }
 
