@@ -1,5 +1,6 @@
 package com.sunayanpradhan.onlinevoting.Adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -132,6 +133,8 @@ class VoteAdapter(var list: ArrayList<TeamInformation>, var context: Context) : 
                             val intent=Intent(context,VoteListActivity::class.java)
 
                             context.startActivity(intent)
+
+                            (context as Activity).finish()
 
                             builder.dismiss()
 

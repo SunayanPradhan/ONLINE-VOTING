@@ -2,8 +2,14 @@ package com.sunayanpradhan.onlinevoting.Activities
 
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.sunayanpradhan.onlinevoting.Models.VoterInformation
 import com.sunayanpradhan.onlinevoting.R
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -40,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private var isExist=false
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,11 +64,16 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
 
 
+
         verifyButton.setOnClickListener {
 
             if (phoneNo.text.startsWith("+91")){
                 if (phoneNo.length()==13) {
                     startPhoneNumberVerification(phoneNo.text.toString())
+
+
+
+
                 }
                 else{
                     Toast.makeText(this, "Enter phone number correctly", Toast.LENGTH_SHORT).show()
@@ -69,6 +82,9 @@ class MainActivity : AppCompatActivity() {
             else{
                 if (phoneNo.length()==10) {
                     startPhoneNumberVerification("+91${phoneNo.text}")
+
+
+
                 }
                 else{
                     Toast.makeText(this, "Enter phone number correctly", Toast.LENGTH_SHORT).show()
@@ -87,11 +103,9 @@ class MainActivity : AppCompatActivity() {
 
                     user?.userId = dataSnapshot.key.toString()
 
-                    if (phoneNo.text.toString()==user?.phoneNo ||
-                        aadhaarNo.text.toString()==user?.aadhaarId||
+                    if (aadhaarNo.text.toString()==user?.aadhaarId||
                         voterNo.text.toString()==user?.voterId){
 
-                        Toast.makeText(this@MainActivity, "", Toast.LENGTH_SHORT).show()
                         isExist=true
 
                     }
@@ -167,17 +181,55 @@ class MainActivity : AppCompatActivity() {
 
                     val user = task.result?.user
 
-//                    if (FirebaseAuth.getInstance().uid!=null){
-//                        val intent=Intent(this,VoteActivity::class.java)
-//
-//                        startActivity(intent)
-//                    }
-//                    else {
+                    if (task.result?.additionalUserInfo?.isNewUser!!){
+
                         sendDataToDatabase()
 
+                    }
+
+                    else{
 
 
-//                    }
+                        FirebaseDatabase.getInstance().reference.child("Voters").child(FirebaseAuth.getInstance().uid.toString()).addValueEventListener(object :ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+
+                                val data:VoterInformation?=snapshot.getValue(VoterInformation::class.java)
+
+                                data?.userId=snapshot.key.toString()
+
+                                if (aadhaarNo.text.toString().trim()==data?.aadhaarId &&
+                                    voterNo.text.toString().trim()==data.voterId &&
+                                    phoneNo.text.toString().trim()==data.phoneNo){
+
+
+                                    val intent=Intent(this@MainActivity,VoteCategoryActivity::class.java)
+
+                                    startActivity(intent)
+
+
+                                }
+
+                                else{
+
+                                    Toast.makeText(this@MainActivity, "Enter all data correctly", Toast.LENGTH_SHORT).show()
+
+                                    FirebaseAuth.getInstance().signOut()
+
+
+                                }
+
+
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+                            }
+
+                        })
+
+
+                    }
+
 
 
                 } else {
@@ -192,9 +244,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+
     }
 
     private fun startPhoneNumberVerification(phoneNumber: String) {
+
+        verifyButton.isEnabled=false
+
+        verifyButton.setBackgroundColor(Color.GRAY)
+
+        Toast.makeText(this, "OTP Send", Toast.LENGTH_SHORT).show()
 
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
@@ -203,6 +264,15 @@ class MainActivity : AppCompatActivity() {
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
+
+
+        Handler().postDelayed({
+            verifyButton.isEnabled=true
+
+            verifyButton.setBackgroundColor(Color.BLACK)
+
+            }, 60000)
+
 
     }
 
@@ -290,6 +360,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 }

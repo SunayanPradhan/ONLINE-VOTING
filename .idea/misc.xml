@@ -3,13 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_helpline.xml" value="0.21822916666666667" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vc.xml" value="0.43186582809224316" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vote.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vote_category.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vote_count.xml" value="0.21458333333333332" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vote_list.xml" value="0.21822916666666667" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/activity_vote_schedule.xml" value="0.21458333333333332" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/election_layout.xml" value="0.2171875" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/helpline_dialog_layout.xml" value="0.2171875" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/helpline_layout.xml" value="0.1782051282051282" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/layout_vote.xml" value="0.2171875" />
         <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/submit_dialog_layout.xml" value="0.2171875" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/vote_count_layout.xml" value="0.21458333333333332" />
+        <entry key="..\:/AndroidStudioProjects/ONLINEVOTING/app/src/main/res/layout/vote_schedule_layout.xml" value="0.2" />
       </map>
     </option>
   </component>

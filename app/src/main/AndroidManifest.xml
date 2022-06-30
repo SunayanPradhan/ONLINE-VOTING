@@ -17,6 +17,18 @@
         android:theme="@style/Theme.ONLINEVOTING"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.HelplineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VcActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VoteCountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VoteScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.VoteListActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package com.sunayanpradhan.onlinevoting.Activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -17,15 +18,20 @@ import com.sunayanpradhan.onlinevoting.R
 import com.sunayanpradhan.onlinevoting.Models.TeamInformation
 import com.sunayanpradhan.onlinevoting.Adapters.VoteAdapter
 import com.sunayanpradhan.onlinevoting.Models.VoteInformation
+import com.sunayanpradhan.onlinevoting.Models.VoteResponseInformation
+import java.text.SimpleDateFormat
 
 class VoteActivity : AppCompatActivity() {
 
     lateinit var voteLogo:ImageView
     lateinit var voteTitle:TextView
     lateinit var voteDuration:TextView
+
     lateinit var teamRecyclerView: RecyclerView
 
     lateinit var list:ArrayList<TeamInformation>
+
+
 
     companion object{
 
@@ -44,7 +50,6 @@ class VoteActivity : AppCompatActivity() {
         voteDuration=findViewById(R.id.vote_duration)
         teamRecyclerView=findViewById(R.id.team_recyclerView)
         voteSubmit=findViewById(R.id.vote_submit)
-
 
         val intent=intent
 
@@ -73,7 +78,7 @@ class VoteActivity : AppCompatActivity() {
 
                     voteTitle.text= data?.voteTitle
 
-                    voteDuration.text= data?.voteStartTime.toString()+"-"+data?.voteEndTime.toString()
+                    voteDuration.text= SimpleDateFormat.getInstance().format( data?.voteStartTime).toString()+"-"+SimpleDateFormat.getInstance().format( data?.voteEndTime).toString()
 
 
 
@@ -88,32 +93,6 @@ class VoteActivity : AppCompatActivity() {
         })
 
 
-//        FirebaseDatabase.getInstance().reference.child("VoteTeams").addListenerForSingleValueEvent(object :ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                for (datasnapShot in snapshot.children){
-//
-//                    val data: TeamInformation?=datasnapShot.getValue(TeamInformation::class.java)
-//
-//                    data?.teamId=datasnapShot.key.toString()
-//
-//                    list.add(data!!)
-//                }
-//
-//
-//                adapter.notifyDataSetChanged()
-//
-//                teamRecyclerView.adapter=adapter
-//
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//                Toast.makeText(this@VoteActivity, error.message, Toast.LENGTH_SHORT).show()
-//
-//            }
-//        })
 
 
         FirebaseDatabase.getInstance().reference.child("Votes").child(voteId).child("voteTeams").addListenerForSingleValueEvent(object :ValueEventListener{
@@ -155,6 +134,8 @@ class VoteActivity : AppCompatActivity() {
 
 
         })
+
+
 
     }
 }
